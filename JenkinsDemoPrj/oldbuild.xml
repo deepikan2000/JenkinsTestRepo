@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<project name="JenkinsDemoPrj" default="all"  basedir=".">
+   	<property file="build1.properties"/>
+   	<path id="master-classpath">
+   	      <fileset dir="WebContent/WEB-INF/lib">
+   	         <include name="*.jar"/>
+   	      </fileset>
+   	 <!-- <fileset dir="${tomcat.classpath}">
+   	        <include name="*.jar"/>
+   	    </fileset> 
+   	    -->
+   		
+   	  <pathelement path="${build.dir}"/>
+   	</path>		
+ 
+   	<target name="compile" description="Compile source tree java files">
+   		<echo message="creating dir" />
+   	      <mkdir dir="${build.dir}"/>
+   		<echo message="finished " />
+   	      <javac destdir="${build.dir}" source="1.7" target="1.7">
+   	         <src path="${src.dir}"/>
+   	         <classpath refid="master-classpath"/>
+   	      </javac>
+    </target>
+   	
+   	<target name="clean" description="Clean output directories">
+   	      <delete>
+   	         <fileset dir="${build.dir}">
+   	            <include name="**/*.class"/>
+   	         </fileset>
+   	      </delete>
+    </target> 	
+  
+   	<target name="build-war">
+   		<echo message="buildwar" />
+   	   <war destfile="${projectName}.war" webxml="${web.dir}/WEB-INF/web.xml" >
+   	      <fileset dir="${web.dir}">
+   	          <include name="**/*.*"/>
+   	      </fileset>
+   	      
+   	      <lib dir="WebContent/WEB-INF/lib">
+   	      </lib>
+   	      
+   	      <classes dir="${build.dir}"/>
+   	   </war>
+   	   
+   	</target>
+   	<target name="deploy">
+   	 <copy file="${projectName}.war" tofile= "${deploy.dir}/${projectName}.war" />
+   	</target>
+   	
+   	<target name="info">
+      <echo>Jenkins Demo  - Welcome to Apache Ant!</echo>
+   </target>
+   <!-- Default, run this -->
+   <target name="all" depends="clean, compile, build-war,deploy" />
+   	
+   	
+   		
+</project>
