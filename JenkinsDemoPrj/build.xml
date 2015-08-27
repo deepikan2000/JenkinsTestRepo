@@ -1,19 +1,8 @@
 <?xml version="1.0"?>
 <project name="JenkinsDemoPrj" default="all" basedir=".">
-	<property file="build1.properties" />
+	
 	<property file="build.properties" />
-	<!--
-   	<path id="master-classpath">
-   	      <fileset dir="WebContent/WEB-INF/lib">
-   	         <include name="*.jar"/>
-   	      </fileset>
-   	  <fileset dir="${tomcat.classpath}">
-   	        <include name="*.jar"/>
-   	    </fileset> 
-   	  <pathelement path="${build.dir}"/>
-   	</path>		
- -->
-
+	<property environment="env"/>
 	<target name="info">
 		<echo>Jenkins Demo  - Welcome to Apache Ant!</echo>
 	</target>
@@ -51,7 +40,7 @@
 				<include name="**/*.*" />
 			</fileset>
 
-			<lib dir="WebContent/WEB-INF/lib">
+			<lib dir="${lib.dir}">
 			</lib>
 
 			<classes dir="${build.dir}" />
